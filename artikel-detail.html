@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - Majelis Tabligh PDM Sidoarjo</title>
+    
+    <!-- Impor Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tema ala Shadcn/ui -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3, 31.8%, 91.4%)",
+                        background: "hsl(0, 0%, 100%)",
+                        foreground: "hsl(222.2, 47.4%, 11.2%)",
+                        primary: "hsl(222.2, 47.4%, 11.2%)",
+                        "primary-foreground": "hsl(210, 40%, 98%)",
+                        muted: "hsl(210, 40%, 96.1%)",
+                        "muted-foreground": "hsl(215.4, 16.3%, 46.9%)",
+                    },
+                    borderRadius: {
+                        xl: "0.75rem",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-background text-foreground font-sans">
+
+    <!-- Navigasi -->
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/40/40" alt="Logo" class="rounded-full w-10 h-10 object-cover">
+                <span class="font-bold text-lg tracking-tight">Tablighmu Sidoarjo</span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-muted-foreground hover:text-foreground transition-colors">Beranda</a>
+                <a href="kajian.html" class="text-muted-foreground hover:text-foreground transition-colors">Kajian</a>
+                <a href="artikel.html" class="text-foreground transition-colors">Artikel</a>
+                <a href="tentang.html" class="text-muted-foreground hover:text-foreground transition-colors">Tentang Kami</a>
+            </nav>
+            <button class="md:hidden p-2 text-foreground" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Area Konten Artikel -->
+        <article class="container mx-auto px-4 py-8 md:py-12 max-w-3xl" id="article-content">
+            <!-- Konten ini akan ditimpa oleh JavaScript jika ID ditemukan -->
+            <div class="text-center py-20">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-muted border-t-primary mb-4"></div>
+                <p class="text-muted-foreground">Memuat artikel...</p>
+            </div>
+        </article>
+
+        <!-- Artikel Terkait (Card Layout) -->
+        <section class="bg-muted/30 py-12 border-t border-border mt-8">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h2 class="text-2xl font-bold tracking-tight mb-6">Artikel Terkait</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="related-articles">
+                    <!-- Card dimuat via ES6 -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border bg-white py-8 mt-auto">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/32/32" alt="Logo Footer" class="rounded-full w-8 h-8 object-cover grayscale">
+                <span class="font-semibold">Majelis Tabligh PDM Sidoarjo</span>
+            </div>
+            <div class="text-sm text-muted-foreground">
+                &copy; 2026 Tablighmu Sidoarjo. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logika ES6+ -->
+    <script type="module">
+        // Data Dummy Terpusat
+        const databaseArtikel = [
+            {
+                id: 1,
+                title: "Makna Kemerdekaan dalam Perspektif Tauhid",
+                author: "Ust. M. Ridwan, M.Pd.",
+                date: "25 Agustus 2026",
+                category: "Akhlak",
+                image: "https://picsum.photos/seed/artikel1/1200/600",
+                content: `
+                    <p>Kemerdekaan adalah anugerah terbesar yang diberikan Allah SWT kepada bangsa ini. Namun, merdeka sejati bukanlah sekadar terbebas dari penjajahan fisik. Lebih dalam dari itu, kemerdekaan adalah terbebasnya jiwa dari penghambaan kepada selain Allah SWT.</p>
+                    <p>Dalam perspektif tauhid, seorang muslim yang merdeka adalah mereka yang tunduk dan patuh hanya kepada Sang Pencipta. Ketika jiwa seseorang sudah terikat kuat dengan kalimat <em>Laa Ilaaha Illallah</em>, maka ia tidak akan mudah ditundukkan oleh hawa nafsu, harta, maupun kekuasaan duniawi.</p>
+                    <blockquote class="border-l-4 border-primary pl-4 my-6 italic text-muted-foreground">
+                        "Barangsiapa yang memerdekakan dirinya dari belenggu hawa nafsu, maka dialah yang sesungguhnya telah merdeka."
+                    </blockquote>
+                    <p>Oleh karena itu, di bulan kemerdekaan ini, mari kita refleksikan kembali sejauh mana tauhid kita telah memerdekakan cara berpikir dan bertindak kita sehari-hari. Mari kita isi kemerdekaan ini dengan karya dan amal saleh yang mencerahkan peradaban.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Materi Khutbah Jumat: Menjaga Lisan di Era Media Sosial",
+                author: "Tim Majelis Tabligh",
+                date: "21 Agustus 2026",
+                category: "Khutbah Jumat",
+                image: "https://picsum.photos/seed/artikel2/1200/600",
+                content: `
+                    <p>Di era digital saat ini, jari tangan kita telah menjadi perpanjangan dari lisan. Setiap ketikan, komentar, dan status yang kita unggah di media sosial memiliki pertanggungjawaban yang sama beratnya dengan apa yang kita ucapkan secara langsung.</p>
+                    <p>Rasulullah SAW mengingatkan kita bahwa keselamatan manusia sangat bergantung pada kemampuannya menjaga lisan. Dalam konteks modern, menjaga lisan berarti mengendalikan jemari kita dari menyebarkan hoaks, fitnah, dan ujaran kebencian.</p>
+                    <p>Sebagai umat Islam, kita diajarkan tradisi tabayyun (klarifikasi). Janganlah kita terburu-buru membagikan informasi yang belum jelas kebenarannya, karena hal tersebut bisa menjadi amal jariyah yang buruk jika merugikan orang lain.</p>
+                `
+            }
+        ];
+
+        const renderArtikelDetail = () => {
+            // Mengambil ID dari URL Parameter (misal: ?id=1)
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = parseInt(urlParams.get('id')) || 1; // Default ke artikel 1 jika tidak ada ID
+
+            const article = databaseArtikel.find(a => a.id === articleId);
+            const container = document.getElementById('article-content');
+
+            if (article) {
+                container.innerHTML = `
+                    <a href="artikel.html" class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary mb-6 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Kembali ke Artikel
+                    </a>
+                    
+                    <div class="mb-8">
+                        <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-md mb-4">${article.category}</span>
+                        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-4 text-foreground">${article.title}</h1>
+                        
+                        <div class="flex items-center gap-3 text-sm text-muted-foreground border-b border-border pb-6">
+                            <img src="https://picsum.photos/seed/avatar${article.id}/40/40" alt="Penulis" class="w-10 h-10 rounded-full bg-muted">
+                            <div>
+                                <p class="font-medium text-foreground">${article.author}</p>
+                                <p>${article.date}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full aspect-[21/9] md:aspect-[16/9] bg-muted rounded-xl overflow-hidden mb-8 shadow-sm">
+                        <img src="${article.image}" alt="Cover Artikel" class="w-full h-full object-cover">
+                    </div>
+
+                    <!-- Area Teks dengan spacing yang nyaman dibaca -->
+                    <div class="space-y-5 text-foreground leading-relaxed md:text-lg">
+                        ${article.content}
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-20">
+                        <h1 class="text-2xl font-bold mb-4">Artikel Tidak Ditemukan</h1>
+                        <a href="artikel.html" class="text-primary hover:underline">Kembali ke daftar artikel</a>
+                    </div>
+                `;
+            }
+
+            // Render Artikel Terkait (mengambil 2 artikel selain artikel saat ini)
+            const relatedContainer = document.getElementById('related-articles');
+            const relatedArticles = databaseArtikel.filter(a => a.id !== articleId).slice(0, 2);
+            
+            relatedArticles.forEach(rel => {
+                const card = document.createElement('div');
+                card.className = "flex flex-col md:flex-row border border-border bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group";
+                card.innerHTML = `
+                    <div class="w-full md:w-48 aspect-video md:aspect-square bg-muted relative overflow-hidden shrink-0">
+                        <img src="${rel.image}" alt="${rel.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                    </div>
+                    <div class="p-5 flex flex-col justify-center flex-grow">
+                        <span class="text-xs font-semibold text-primary mb-1">${rel.category}</span>
+                        <h3 class="font-bold text-lg mb-2 leading-tight group-hover:text-primary transition-colors">
+                            <a href="artikel-detail.html?id=${rel.id}" class="before:absolute before:inset-0">${rel.title}</a>
+                        </h3>
+                        <p class="text-sm text-muted-foreground">${rel.date}</p>
+                    </div>
+                `;
+                relatedContainer.appendChild(card);
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", renderArtikelDetail);
+    </script>
+</body>
+</html>

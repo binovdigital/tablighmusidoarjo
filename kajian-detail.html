@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Kajian - Majelis Tabligh PDM Sidoarjo</title>
+    
+    <!-- Impor Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tema ala Shadcn/ui -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3, 31.8%, 91.4%)",
+                        background: "hsl(0, 0%, 100%)",
+                        foreground: "hsl(222.2, 47.4%, 11.2%)",
+                        primary: "hsl(222.2, 47.4%, 11.2%)",
+                        "primary-foreground": "hsl(210, 40%, 98%)",
+                        muted: "hsl(210, 40%, 96.1%)",
+                        "muted-foreground": "hsl(215.4, 16.3%, 46.9%)",
+                    },
+                    borderRadius: {
+                        xl: "0.75rem",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-background text-foreground font-sans">
+
+    <!-- Navigasi -->
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/40/40" alt="Logo" class="rounded-full w-10 h-10 object-cover">
+                <span class="font-bold text-lg tracking-tight">Tablighmu Sidoarjo</span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-muted-foreground hover:text-foreground transition-colors">Beranda</a>
+                <a href="kajian.html" class="text-foreground transition-colors">Kajian</a>
+                <a href="artikel.html" class="text-muted-foreground hover:text-foreground transition-colors">Artikel</a>
+                <a href="tentang.html" class="text-muted-foreground hover:text-foreground transition-colors">Tentang Kami</a>
+            </nav>
+            <button class="md:hidden p-2 text-foreground" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow bg-muted/20">
+        <div class="container mx-auto px-4 py-8 max-w-4xl" id="kajian-content">
+            <!-- Loading State -->
+            <div class="text-center py-20">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-muted border-t-primary mb-4"></div>
+                <p class="text-muted-foreground">Memuat detail kajian...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border bg-white py-8 mt-auto">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/32/32" alt="Logo Footer" class="rounded-full w-8 h-8 object-cover grayscale">
+                <span class="font-semibold">Majelis Tabligh PDM Sidoarjo</span>
+            </div>
+            <div class="text-sm text-muted-foreground">
+                &copy; 2026 Tablighmu Sidoarjo. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logika ES6+ -->
+    <script type="module">
+        const jadwalKajian = [
+            {
+                id: 1,
+                title: "Tafsir Al-Qur'an Tematik: Membangun Keluarga Sakinah",
+                speaker: "Ust. Dr. H. Hasanuddin, M.Ag.",
+                type: "Kajian Rutin",
+                date: "Ahad, 30 Agustus 2026",
+                time: "05:30 WIB (Ba'da Subuh)",
+                location: "Masjid An-Nur, Sidoarjo",
+                image: "https://picsum.photos/seed/jadwal1/1200/600",
+                description: "Kajian rutin Ahad Pagi ini terbuka untuk umum (Ikhwan & Akhwat). Fokus pembahasan kali ini adalah menggali hikmah dari ayat-ayat Al-Qur'an terkait manajemen konflik rumah tangga dan pola asuh anak berlandaskan kasih sayang. Disediakan sarapan pagi setelah kajian selesai.",
+                contact: "0812-3456-7890 (Panitia Masjid An-Nur)"
+            },
+            {
+                id: 2,
+                title: "Fiqih Muamalah Kontemporer di Era Digital",
+                speaker: "Ust. M. Taufiq, Lc., M.HI.",
+                type: "Kajian Tematik",
+                date: "Rabu, 02 September 2026",
+                time: "18:30 WIB (Ba'da Maghrib)",
+                location: "Masjid Al-Ikhlas, Candi",
+                image: "https://picsum.photos/seed/jadwal2/1200/600",
+                description: "Membahas hukum dan tinjauan syariat terkait transaksi modern seperti e-wallet, paylater, dropshipping, dan investasi digital. Sangat disarankan bagi para pelaku usaha, pedagang, dan generasi muda yang aktif dalam ekonomi digital.",
+                contact: "0899-8765-4321 (Sekretariat Al-Ikhlas)"
+            }
+        ];
+
+        const renderKajianDetail = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const kajianId = parseInt(urlParams.get('id')) || 1; 
+
+            const kajian = jadwalKajian.find(k => k.id === kajianId);
+            const container = document.getElementById('kajian-content');
+
+            if (kajian) {
+                container.innerHTML = `
+                    <a href="kajian.html" class="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary mb-6 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Kembali ke Jadwal Kajian
+                    </a>
+                    
+                    <div class="bg-white border border-border rounded-xl overflow-hidden shadow-sm">
+                        <!-- Hero Image -->
+                        <div class="w-full aspect-[21/9] md:aspect-[2.5/1] bg-muted relative">
+                            <img src="${kajian.image}" alt="${kajian.title}" class="w-full h-full object-cover">
+                            <div class="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1.5 rounded-md text-sm font-semibold shadow-md">
+                                ${kajian.type}
+                            </div>
+                        </div>
+
+                        <!-- Konten Detail -->
+                        <div class="p-6 md:p-10">
+                            <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 leading-tight">${kajian.title}</h1>
+                            
+                            <!-- Info Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 p-6 bg-muted/30 rounded-xl border border-border/50">
+                                <div class="flex items-start gap-3">
+                                    <div class="p-2 bg-white rounded-lg border border-border shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-muted-foreground font-medium mb-1">Pemateri</p>
+                                        <p class="font-semibold text-foreground">${kajian.speaker}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="p-2 bg-white rounded-lg border border-border shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-muted-foreground font-medium mb-1">Tanggal & Waktu</p>
+                                        <p class="font-semibold text-foreground">${kajian.date}</p>
+                                        <p class="text-sm text-foreground/80">${kajian.time}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 md:col-span-2">
+                                    <div class="p-2 bg-white rounded-lg border border-border shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-xs text-muted-foreground font-medium mb-1">Lokasi</p>
+                                        <p class="font-semibold text-foreground mb-2">${kajian.location}</p>
+                                        <!-- Simulasi Map Location -->
+                                        <div class="w-full h-32 bg-muted rounded-lg relative overflow-hidden border border-border">
+                                            <img src="https://picsum.photos/seed/map/800/400" class="w-full h-full object-cover" alt="Peta Lokasi">
+                                            <div class="absolute inset-0 bg-primary/5 flex items-center justify-center backdrop-blur-[1px]">
+                                                <button class="bg-white/90 text-foreground px-4 py-2 rounded-md text-xs font-semibold shadow-sm hover:bg-white transition-colors">Lihat Peta</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Deskripsi -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold mb-3 border-b border-border pb-2">Deskripsi Kegiatan</h3>
+                                <p class="text-muted-foreground leading-relaxed">${kajian.description}</p>
+                            </div>
+                            
+                            <!-- Kontak Info -->
+                            <div class="mb-8">
+                                <h3 class="text-lg font-bold mb-3 border-b border-border pb-2">Narahubung</h3>
+                                <p class="text-muted-foreground">${kajian.contact}</p>
+                            </div>
+
+                            <!-- Tombol Aksi -->
+                            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-border">
+                                <button class="flex-1 bg-primary text-primary-foreground h-11 rounded-md font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="m9 16 2 2 4-4"></path></svg>
+                                    Simpan ke Kalender
+                                </button>
+                                <button class="flex-1 border border-border bg-white text-foreground h-11 rounded-md font-medium text-sm flex items-center justify-center gap-2 hover:bg-muted transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                    Bagikan Jadwal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-20">
+                        <h1 class="text-2xl font-bold mb-4">Jadwal Tidak Ditemukan</h1>
+                        <a href="kajian.html" class="text-primary hover:underline">Kembali ke jadwal kajian</a>
+                    </div>
+                `;
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", renderKajianDetail);
+    </script>
+</body>
+</html>

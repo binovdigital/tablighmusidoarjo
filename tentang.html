@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - Majelis Tabligh PDM Sidoarjo</title>
+    
+    <!-- Impor Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tema ala Shadcn/ui -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3, 31.8%, 91.4%)",
+                        background: "hsl(0, 0%, 100%)",
+                        foreground: "hsl(222.2, 47.4%, 11.2%)",
+                        primary: "hsl(222.2, 47.4%, 11.2%)",
+                        "primary-foreground": "hsl(210, 40%, 98%)",
+                        muted: "hsl(210, 40%, 96.1%)",
+                        "muted-foreground": "hsl(215.4, 16.3%, 46.9%)",
+                    },
+                    borderRadius: {
+                        xl: "0.75rem",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-background text-foreground font-sans">
+
+    <!-- Navigasi -->
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/40/40" alt="Logo" class="rounded-full w-10 h-10 object-cover">
+                <span class="font-bold text-lg tracking-tight">Tablighmu Sidoarjo</span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-muted-foreground hover:text-foreground transition-colors">Beranda</a>
+                <a href="kajian.html" class="text-muted-foreground hover:text-foreground transition-colors">Kajian</a>
+                <a href="artikel.html" class="text-muted-foreground hover:text-foreground transition-colors">Artikel</a>
+                <!-- Link Tentang Kami menjadi aktif -->
+                <a href="tentang.html" class="text-foreground transition-colors">Tentang Kami</a>
+            </nav>
+            <button class="md:hidden p-2 text-foreground" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Profil -->
+        <section class="container mx-auto px-4 py-12 md:py-20 flex flex-col items-center text-center">
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">Profil Majelis Tabligh</h1>
+            <p class="text-muted-foreground text-base md:text-lg max-w-3xl mb-10 leading-relaxed">
+                Majelis Tabligh Pimpinan Daerah Muhammadiyah (PDM) Sidoarjo adalah unsur pembantu pimpinan yang bertugas mengkoordinasikan, merencanakan, dan melaksanakan program dakwah Islam berkemajuan di seluruh wilayah Kabupaten Sidoarjo.
+            </p>
+            <div class="w-full max-w-5xl aspect-video rounded-xl overflow-hidden border border-border shadow-sm">
+                <img src="https://picsum.photos/seed/kantor/1200/600" alt="Gedung Pusat Dakwah" class="w-full h-full object-cover">
+            </div>
+        </section>
+
+        <!-- Visi & Misi (Strict Card Layout) -->
+        <section class="bg-muted/30 py-16 border-y border-border">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- Card Visi -->
+                    <div class="flex flex-col bg-white border border-border rounded-xl p-8 shadow-sm h-full">
+                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-4 tracking-tight">Visi</h2>
+                        <p class="text-muted-foreground leading-relaxed flex-grow">
+                            Terwujudnya masyarakat Islam yang sebenar-benarnya di wilayah Sidoarjo melalui gerakan dakwah yang mencerahkan, menggembirakan, dan memberdayakan umat berbasis pemahaman agama yang bersumber pada Al-Qur'an dan As-Sunnah.
+                        </p>
+                    </div>
+
+                    <!-- Card Misi -->
+                    <div class="flex flex-col bg-white border border-border rounded-xl p-8 shadow-sm h-full">
+                        <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-4 tracking-tight">Misi</h2>
+                        <ul class="space-y-3 text-muted-foreground flex-grow">
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                Membina dan meningkatkan kapasitas mubaligh Muhammadiyah.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                Mengembangkan metode dakwah adaptif di era digital.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                Memakmurkan masjid dan mushola sebagai pusat pembinaan umat.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                Menyebarluaskan paham agama yang moderat (wasathiyah) sesuai manhaj Tarjih.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Susunan Pengurus -->
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight mb-4">Susunan Pengurus</h2>
+                    <p class="text-muted-foreground">Pimpinan dan Anggota Majelis Tabligh PDM Sidoarjo Periode 2022-2027.</p>
+                </div>
+                
+                <div id="pengurus-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <!-- Profile cards dimuat melalui ES6 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontak / Hubungi Kami -->
+        <section class="container mx-auto px-4 py-12 max-w-4xl mb-12">
+            <div class="flex flex-col md:flex-row border border-border bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="flex-1 p-8 flex flex-col justify-center">
+                    <h2 class="text-2xl font-bold mb-2">Hubungi Kami</h2>
+                    <p class="text-muted-foreground text-sm mb-6">Kami terbuka untuk kolaborasi dakwah dan masukan dari umat.</p>
+                    
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-center gap-3 text-foreground">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted-foreground"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Gedung Dakwah Muhammadiyah, Jl. Majapahit, Sidoarjo</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-foreground">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted-foreground"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                            <span>majelistabligh@pdmsidoarjo.org</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-foreground">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted-foreground"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>(031) 896-XXXX</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 min-h-[300px] bg-muted relative">
+                    <!-- Placeholder Map -->
+                    <img src="https://picsum.photos/seed/map/600/600" alt="Lokasi PDM Sidoarjo" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-primary/10 flex items-center justify-center backdrop-blur-[2px]">
+                        <button class="bg-white text-foreground px-4 py-2 rounded-md font-medium text-sm shadow-sm hover:bg-muted transition-colors">
+                            Buka di Google Maps
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border bg-white py-8 mt-auto">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/32/32" alt="Logo Footer" class="rounded-full w-8 h-8 object-cover grayscale">
+                <span class="font-semibold">Majelis Tabligh PDM Sidoarjo</span>
+            </div>
+            <div class="text-sm text-muted-foreground">
+                &copy; 2026 Tablighmu Sidoarjo. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logika ES6+ -->
+    <script type="module">
+        const dataPengurus = [
+            {
+                id: 1,
+                name: "Ust. H. Ahmad Zainuddin, M.Pd.",
+                role: "Ketua Majelis",
+                image: "https://picsum.photos/seed/pengurus1/300/300"
+            },
+            {
+                id: 2,
+                name: "Ust. Dr. Fathurrahman, Lc.",
+                role: "Wakil Ketua",
+                image: "https://picsum.photos/seed/pengurus2/300/300"
+            },
+            {
+                id: 3,
+                name: "Ust. M. Ridwan, S.Ag.",
+                role: "Sekretaris",
+                image: "https://picsum.photos/seed/pengurus3/300/300"
+            },
+            {
+                id: 4,
+                name: "Bapak H. Sulaiman, S.E.",
+                role: "Bendahara",
+                image: "https://picsum.photos/seed/pengurus4/300/300"
+            },
+            {
+                id: 5,
+                name: "Ust. Ibrahim Al-Haq",
+                role: "Div. Pembinaan Mubaligh",
+                image: "https://picsum.photos/seed/pengurus5/300/300"
+            },
+            {
+                id: 6,
+                name: "Ust. Hasanuddin, M.Ag.",
+                role: "Div. Dakwah Digital",
+                image: "https://picsum.photos/seed/pengurus6/300/300"
+            },
+            {
+                id: 7,
+                name: "Ust. Taufiqurrahman",
+                role: "Div. Kemasjidan",
+                image: "https://picsum.photos/seed/pengurus7/300/300"
+            },
+            {
+                id: 8,
+                name: "Ust. M. Sholeh, M.HI.",
+                role: "Div. Pengkajian",
+                image: "https://picsum.photos/seed/pengurus8/300/300"
+            }
+        ];
+
+        const renderPengurus = () => {
+            const container = document.getElementById('pengurus-container');
+            
+            dataPengurus.forEach(person => {
+                const card = document.createElement('div');
+                card.className = "flex flex-col items-center bg-white border border-border p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow";
+                
+                card.innerHTML = `
+                    <div class="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-muted">
+                        <img src="${person.image}" alt="${person.name}" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                    <h3 class="font-semibold text-center text-foreground leading-tight mb-1">${person.name}</h3>
+                    <p class="text-sm text-muted-foreground text-center">${person.role}</p>
+                `;
+                container.appendChild(card);
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", renderPengurus);
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel & Tulisan - Majelis Tabligh PDM Sidoarjo</title>
+    
+    <!-- Impor Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tema ala Shadcn/ui -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3, 31.8%, 91.4%)",
+                        background: "hsl(0, 0%, 100%)",
+                        foreground: "hsl(222.2, 47.4%, 11.2%)",
+                        primary: "hsl(222.2, 47.4%, 11.2%)",
+                        "primary-foreground": "hsl(210, 40%, 98%)",
+                        muted: "hsl(210, 40%, 96.1%)",
+                        "muted-foreground": "hsl(215.4, 16.3%, 46.9%)",
+                    },
+                    borderRadius: {
+                        xl: "0.75rem",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-background text-foreground font-sans">
+
+    <!-- Navigasi -->
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/40/40" alt="Logo" class="rounded-full w-10 h-10 object-cover">
+                <span class="font-bold text-lg tracking-tight">Tablighmu Sidoarjo</span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-muted-foreground hover:text-foreground transition-colors">Beranda</a>
+                <a href="kajian.html" class="text-muted-foreground hover:text-foreground transition-colors">Kajian</a>
+                <!-- Link Artikel menjadi aktif -->
+                <a href="artikel.html" class="text-foreground transition-colors">Artikel</a>
+                <a href="tentang.html" class="text-muted-foreground hover:text-foreground transition-colors">Tentang Kami</a>
+            </nav>
+            <button class="md:hidden p-2 text-foreground" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Page Header & Search -->
+        <section class="bg-muted/30 py-10 border-b border-border">
+            <div class="container mx-auto px-4 flex flex-col items-center text-center">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Artikel & Publikasi</h1>
+                <p class="text-muted-foreground max-w-2xl mb-8">
+                    Kumpulan tulisan, opini, materi khutbah, dan wawasan keislaman dari para mubaligh dan pengurus Majelis Tabligh PDM Sidoarjo.
+                </p>
+                
+                <!-- Search Bar UI -->
+                <div class="w-full max-w-lg relative mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" placeholder="Cari artikel, topik, atau penulis..." class="w-full h-12 pl-10 pr-4 rounded-md border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm">
+                </div>
+
+                <!-- Category Tags -->
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button class="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">Semua</button>
+                    <button class="px-3 py-1 bg-white border border-border text-foreground hover:bg-muted text-xs font-medium rounded-full transition-colors">Khutbah Jumat</button>
+                    <button class="px-3 py-1 bg-white border border-border text-foreground hover:bg-muted text-xs font-medium rounded-full transition-colors">Tafsir</button>
+                    <button class="px-3 py-1 bg-white border border-border text-foreground hover:bg-muted text-xs font-medium rounded-full transition-colors">Akhlak</button>
+                    <button class="px-3 py-1 bg-white border border-border text-foreground hover:bg-muted text-xs font-medium rounded-full transition-colors">Berita</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daftar Artikel Grid -->
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <div id="artikel-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card artikel dimuat melalui ES6 -->
+                </div>
+                
+                <!-- Pagination (UI Only) -->
+                <div class="mt-12 flex justify-center items-center gap-2">
+                    <button class="h-9 w-9 flex items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-muted disabled:opacity-50" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="h-9 w-9 flex items-center justify-center rounded-md border border-primary bg-primary text-primary-foreground font-medium text-sm">1</button>
+                    <button class="h-9 w-9 flex items-center justify-center rounded-md border border-border hover:bg-muted font-medium text-sm">2</button>
+                    <button class="h-9 w-9 flex items-center justify-center rounded-md border border-border hover:bg-muted font-medium text-sm">3</button>
+                    <span class="text-muted-foreground">...</span>
+                    <button class="h-9 w-9 flex items-center justify-center rounded-md border border-border text-foreground hover:bg-muted">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border bg-white py-8 mt-auto">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/32/32" alt="Logo Footer" class="rounded-full w-8 h-8 object-cover grayscale">
+                <span class="font-semibold">Majelis Tabligh PDM Sidoarjo</span>
+            </div>
+            <div class="text-sm text-muted-foreground">
+                &copy; 2026 Tablighmu Sidoarjo. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logika ES6+ -->
+    <script type="module">
+        const daftarArtikel = [
+            {
+                id: 1,
+                title: "Makna Kemerdekaan dalam Perspektif Tauhid",
+                author: "Ust. M. Ridwan, M.Pd.",
+                date: "25 Agustus 2026",
+                category: "Akhlak",
+                image: "https://picsum.photos/seed/artikel1/600/400",
+                excerpt: "Merdeka sejati bukanlah sekadar bebas dari penjajahan fisik, melainkan terbebasnya jiwa dari penghambaan kepada selain Allah SWT.",
+                url: "artikel-detail.html?id=1"
+            },
+            {
+                id: 2,
+                title: "Materi Khutbah Jumat: Menjaga Lisan di Era Media Sosial",
+                author: "Tim Majelis Tabligh",
+                date: "21 Agustus 2026",
+                category: "Khutbah Jumat",
+                image: "https://picsum.photos/seed/artikel2/600/400",
+                excerpt: "Di era digital, jejak digital sama tajamnya dengan lisan. Bagaimana panduan Islam dalam berinteraksi di dunia maya agar terhindar dari fitnah?",
+                url: "artikel-detail.html?id=2"
+            },
+            {
+                id: 3,
+                title: "Mengenal Sejarah Perkembangan Muhammadiyah di Sidoarjo",
+                author: "Drs. H. Ahmad Zainullah",
+                date: "15 Agustus 2026",
+                category: "Berita",
+                image: "https://picsum.photos/seed/artikel3/600/400",
+                excerpt: "Kilas balik perjalanan dakwah persyarikatan Muhammadiyah di kawasan Sidoarjo dari masa ke masa dan kontribusinya bagi masyarakat.",
+                url: "artikel-detail.html?id=3"
+            },
+            {
+                id: 4,
+                title: "Hukum Transaksi Paylater Berdasarkan Putusan Tarjih",
+                author: "Ust. Dr. Fathurrahman",
+                date: "10 Agustus 2026",
+                category: "Muamalah",
+                image: "https://picsum.photos/seed/artikel4/600/400",
+                excerpt: "Fenomena 'beli sekarang, bayar nanti' (paylater) semakin marak. Mari kita bedah bagaimana tinjauan fiqih muamalah kontemporer menanggapinya.",
+                url: "artikel-detail.html?id=4"
+            },
+            {
+                id: 5,
+                title: "Mendidik Anak Generasi Alpha dengan Keteladanan",
+                author: "Bunda Siti Aisyah, S.Psi.",
+                date: "05 Agustus 2026",
+                category: "Pendidikan",
+                image: "https://picsum.photos/seed/artikel5/600/400",
+                excerpt: "Tantangan mendidik anak saat ini sangat berbeda. Keteladanan orang tua menjadi benteng utama di tengah gempuran informasi tanpa batas.",
+                url: "artikel-detail.html?id=5"
+            },
+            {
+                id: 6,
+                title: "Tafsir Surat Al-Asr: Manajemen Waktu Seorang Muslim",
+                author: "Ust. Ibrahim Al-Haq",
+                date: "01 Agustus 2026",
+                category: "Tafsir",
+                image: "https://picsum.photos/seed/artikel6/600/400",
+                excerpt: "Allah bersumpah demi waktu. Ini menunjukkan betapa berharganya waktu bagi manusia. Siapakah golongan orang yang tidak merugi dalam surat ini?",
+                url: "artikel-detail.html?id=6"
+            }
+        ];
+
+        const renderArtikel = () => {
+            const container = document.getElementById('artikel-container');
+            
+            daftarArtikel.forEach(artikel => {
+                const card = document.createElement('div');
+                card.className = "flex flex-col border border-border bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 group relative";
+                
+                card.innerHTML = `
+                    <div class="relative w-full aspect-[3/2] overflow-hidden">
+                        <img src="${artikel.image}" alt="${artikel.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold text-foreground border border-border/50">
+                            ${artikel.category}
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <!-- Author & Date -->
+                        <div class="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                            <span class="font-medium text-foreground">${artikel.author}</span>
+                            <span class="w-1 h-1 rounded-full bg-border"></span>
+                            <span>${artikel.date}</span>
+                        </div>
+                        
+                        <!-- Title (Clickable entire card) -->
+                        <h3 class="font-bold text-xl mb-3 leading-tight group-hover:text-primary transition-colors">
+                            <a href="${artikel.url}" class="before:absolute before:inset-0">${artikel.title}</a>
+                        </h3>
+                        
+                        <!-- Excerpt -->
+                        <p class="text-sm text-muted-foreground mb-5 line-clamp-3 leading-relaxed">
+                            ${artikel.excerpt}
+                        </p>
+                        
+                        <!-- Read More Link (Push to bottom) -->
+                        <div class="mt-auto pt-4 border-t border-border/50">
+                            <span class="inline-flex items-center text-sm font-medium text-primary">
+                                Baca Artikel 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 transition-transform group-hover:translate-x-1"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", renderArtikel);
+    </script>
+</body>
+</html>
