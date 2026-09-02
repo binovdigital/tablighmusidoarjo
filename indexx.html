@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Majelis Tabligh PDM Sidoarjo</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3, 31.8%, 91.4%)",
+                        background: "hsl(0, 0%, 100%)",
+                        foreground: "hsl(222.2, 47.4%, 11.2%)",
+                        primary: "hsl(222.2, 47.4%, 11.2%)",
+                        "primary-foreground": "hsl(210, 40%, 98%)",
+                        muted: "hsl(210, 40%, 96.1%)",
+                        "muted-foreground": "hsl(215.4, 16.3%, 46.9%)",
+                    },
+                    borderRadius: {
+                        xl: "0.75rem",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-background text-foreground font-sans">
+
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/40/40" alt="Logo" class="rounded-full w-10 h-10 object-cover">
+                <span class="font-bold text-lg tracking-tight">Tablighmu Sidoarjo</span>
+            </a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-muted-foreground">
+                <a href="index.html" class="text-foreground transition-colors">Beranda</a>
+                <a href="kajian.html" class="hover:text-foreground transition-colors">Kajian</a>
+                <a href="artikel.html" class="hover:text-foreground transition-colors">Artikel</a>
+                <a href="tentang.html" class="hover:text-foreground transition-colors">Tentang Kami</a>
+            </nav>
+            <button class="md:hidden p-2 text-foreground" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="container mx-auto px-4 py-12 md:py-20 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+            <div class="flex-1 text-center md:text-left flex flex-col items-center md:items-start">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                    Mencerahkan Semesta, <br class="hidden md:inline"/> Memajukan Sidoarjo
+                </h1>
+                <p class="text-muted-foreground text-base md:text-lg max-w-[600px] mb-8">
+                    Portal informasi, jadwal kajian, dan artikel keislaman dari Majelis Tabligh Pimpinan Daerah Muhammadiyah Sidoarjo.
+                </p>
+                <div class="flex gap-4 w-full md:w-auto flex-col sm:flex-row">
+                    <a href="kajian.html" class="inline-flex justify-center items-center bg-primary text-primary-foreground h-11 px-8 rounded-md font-medium text-sm hover:opacity-90 transition-opacity w-full sm:w-auto">
+                        Jadwal Kajian
+                    </a>
+                    <a href="tentang.html" class="inline-flex justify-center items-center border border-border bg-white text-foreground h-11 px-8 rounded-md font-medium text-sm hover:bg-muted transition-colors w-full sm:w-auto">
+                        Pelajari Lebih Lanjut
+                    </a>
+                </div>
+            </div>
+            <div class="flex-1 w-full mt-8 md:mt-0">
+                <img src="https://picsum.photos/seed/hero/800/600" alt="Kegiatan Majelis Tabligh" class="rounded-xl shadow-lg w-full object-cover aspect-video md:aspect-[4/3] border border-border">
+            </div>
+        </section>
+
+        <section class="bg-muted/50 py-12 md:py-16">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-bold tracking-tight">Kajian & Informasi Terbaru</h2>
+                    <a href="artikel.html" class="text-sm font-medium text-primary hover:underline">Lihat Semua &rarr;</a>
+                </div>
+                
+                <div id="article-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-border bg-white py-8 mt-auto">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/logo/32/32" alt="Logo Footer" class="rounded-full w-8 h-8 object-cover grayscale">
+                <span class="font-semibold">Majelis Tabligh PDM Sidoarjo</span>
+            </div>
+            <div class="text-sm text-muted-foreground">
+                &copy; 2026 Tablighmu Sidoarjo. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        const articles = [
+            {
+                id: 1,
+                title: "Kajian Rutin Ahad Pagi PDM Sidoarjo",
+                date: "28 Agustus 2026",
+                category: "Kajian Rutin",
+                image: "https://picsum.photos/seed/kajian1/600/400",
+                excerpt: "Pembahasan tafsir tematik yang diselenggarakan di Masjid An-Nur Sidoarjo, terbuka untuk umum dan disiarkan secara langsung.",
+                url: "artikel-detail.html?id=1"
+            },
+            {
+                id: 2,
+                title: "Program Pelatihan Mubaligh Muda 2026",
+                date: "24 Agustus 2026",
+                category: "Pendidikan",
+                image: "https://picsum.photos/seed/kajian2/600/400",
+                excerpt: "Mempersiapkan generasi penerus yang cakap dalam berdakwah di era digital dengan pemanfaatan teknologi modern.",
+                url: "artikel-detail.html?id=2"
+            },
+            {
+                id: 3,
+                title: "Panduan Ibadah Praktis Sesuai Tarjih",
+                date: "20 Agustus 2026",
+                category: "Fikih",
+                image: "https://picsum.photos/seed/kajian3/600/400",
+                excerpt: "Membahas tuntunan ibadah harian berdasarkan putusan Majelis Tarjih dan Tajdid untuk memudahkan umat.",
+                url: "artikel-detail.html?id=3"
+            }
+        ];
+
+        const renderArticles = () => {
+            const container = document.getElementById('article-container');
+            
+            articles.forEach(article => {
+                const card = document.createElement('div');
+                // Desain Card Mobile-First yang ketat (flex-col di semua ukuran layar)
+                card.className = "flex flex-col border border-border bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 group";
+                
+                card.innerHTML = `
+                    <div class="relative w-full aspect-[3/2] overflow-hidden">
+                        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy">
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold text-foreground">
+                            ${article.category}
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <p class="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            ${article.date}
+                        </p>
+                        <h3 class="font-bold text-lg mb-2 leading-tight group-hover:text-primary transition-colors">
+                            <a href="${article.url}" class="before:absolute before:inset-0">${article.title}</a>
+                        </h3>
+                        <p class="text-sm text-muted-foreground mb-6 line-clamp-3">
+                            ${article.excerpt}
+                        </p>
+                        <div class="mt-auto">
+                            <a href="${article.url}" class="inline-flex items-center text-sm font-medium text-primary">
+                                Baca Selengkapnya 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                // Catatan: Tautan pada judul memiliki class before:absolute before:inset-0 
+                // yang membuat seluruh area card bisa diklik menuju URL.
+                container.appendChild(card);
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", renderArticles);
+    </script>
+</body>
+</html>
