@@ -1,0 +1,124 @@
+---
+import Layout from "../../layouts/main.astro";
+import { getYoutubeVideos } from "../../utils/youtube";
+
+const videos = await getYoutubeVideos();
+const featuredVideo = videos[0];
+const gridVideos = videos.slice(1);
+---
+
+<Layout title="Galeri Media & Arsip Kajian - TablighMu Sidoarjo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">Galeri Media & Arsip Kajian</h1>
+      <p class="text-white/60 text-lg max-w-2xl mx-auto">
+        Tonton kembali rekaman kajian, khutbah, dan syiar dakwah dari kanal kami.
+      </p>
+    </header>
+
+    {videos.length > 0 ? (
+      <div>
+        {featuredVideo && (
+          <a
+            href={featuredVideo.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Tonton ${featuredVideo.title} di YouTube`}
+            class="group relative block overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_60px_rgba(255,0,0,0.12)] mb-6"
+          >
+            <div class="relative aspect-video md:aspect-[21/9] overflow-hidden">
+              <img
+                src={`https://img.youtube.com/vi/${featuredVideo.id}/maxresdefault.jpg`}
+                alt={featuredVideo.title}
+                loading="eager" decoding="async"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden="true"></div>
+              {featuredVideo.label && (
+                <span class="absolute top-4 left-4 md:top-6 md:left-6 px-4 py-1.5 text-xs md:text-sm font-semibold text-pink-200 bg-pink-500/20 border border-pink-500/30 rounded-full backdrop-blur-xl">
+                  {featuredVideo.label}
+                </span>
+              )}
+              <!-- Prominent glass-morphism play button -->
+              <div class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                <span class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 backdrop-blur-xl border border-white/25 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]">
+                  <svg class="w-9 h-9 md:w-11 md:h-11 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </div>
+              <div class="absolute bottom-0 inset-x-0 p-6 md:p-10">
+                <p class="text-white/60 text-xs md:text-sm font-semibold uppercase tracking-widest mb-2">Video Unggulan</p>
+                <h2 class="text-2xl md:text-4xl font-bold text-white leading-tight line-clamp-2 max-w-4xl">
+                  {featuredVideo.title}
+                </h2>
+              </div>
+            </div>
+          </a>
+        )}
+
+        {gridVideos.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gridVideos.map((video) => (
+              <a
+                href={video.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Tonton ${video.title} di YouTube`}
+                class="group relative overflow-hidden rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,0,0,0.1)] hover:-translate-y-1 active:scale-[0.98] block"
+              >
+                <span class="absolute inset-0 rounded-[2rem] border border-transparent group-hover:border-red-500/20 transition-all duration-500 pointer-events-none z-10"></span>
+                <div class="relative aspect-video overflow-hidden">
+                  <img
+                    src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
+                    alt={video.title}
+                    loading="lazy" decoding="async"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
+                  {video.label && (
+                    <span class="absolute top-3 right-3 px-3 py-1 text-xs font-semibold text-pink-200 bg-pink-500/20 border border-pink-500/30 rounded-full backdrop-blur-xl">
+                      {video.label}
+                    </span>
+                  )}
+                  <!-- Frosted-glass play button -->
+                  <div class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                    <span class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+                      <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="p-5 md:p-6 relative">
+                  <h3 class="text-base md:text-lg font-bold text-white leading-snug mb-2 line-clamp-2 group-hover:text-red-300 transition-colors duration-300">
+                    {video.title}
+                  </h3>
+                  <time
+                    class="text-white/40 text-sm font-medium"
+                    dateTime={video.publishedAt}
+                  >
+                    {new Date(video.publishedAt).toLocaleDateString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    ) : (
+      <div class="text-center py-24">
+        <svg class="mx-auto h-16 w-16 text-white/20 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="text-xl font-semibold text-white/70 mb-2">Belum Ada Video</h3>
+        <p class="text-white/40">Arsip video akan muncul di sini setelah kanal YouTube memperbarui unggahan.</p>
+      </div>
+    )}
+  </div>
+</Layout>

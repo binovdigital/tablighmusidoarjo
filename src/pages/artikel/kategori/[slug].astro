@@ -1,0 +1,104 @@
+---
+import Layout from "../../../layouts/main.astro";
+import { getCategoryBySlug, getCategorySlugs, getPostsByCategory } from "../../../utils/sanity";
+import { urlFor } from "../../../utils/image";
+
+export async function getStaticPaths() {
+  const slugs = await getCategorySlugs();
+  return slugs.map((slug) => ({
+    params: { slug: slug.params.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const category = await getCategoryBySlug(slug as string);
+
+if (!category) {
+  return Astro.redirect("/404");
+}
+
+const posts = await getPostsByCategory(slug as string);
+---
+
+<Layout title={`${category.title} - Kategori Artikel`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <header class="mb-16 text-center">
+      <a href="/blog" class="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors font-medium text-sm mb-6">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        Semua Artikel
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">{category.title}</h1>
+      {category.description && (
+        <p class="text-white/60 text-lg max-w-2xl mx-auto">
+          {category.description}
+        </p>
+      )}
+    </header>
+
+    {posts.length > 0 ? (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <article class="group relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:-translate-y-1 active:scale-[0.98]">
+            {post.mainImage && (
+              <a href={`/blog/${post.slug.current}`} class="block aspect-[16/10] overflow-hidden relative">
+                <img
+                  src={urlFor(post.mainImage).width(800).height(500).fit("crop").url()}
+                  alt={post.mainImage.alt || post.title}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy" decoding="async"
+                />
+                <!-- Iridescent image overlay on hover -->
+                <span class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+              </a>
+            )}
+            <!-- Iridescent glow border on hover -->
+            <span class="absolute inset-0 rounded-[2.5rem] border border-transparent group-hover:border-blue-500/20 group-hover:border-b-purple-500/20 group-hover:border-r-pink-500/20 transition-all duration-500 pointer-events-none"></span>
+            <div class="p-6 md:p-8 relative z-10">
+              <time
+                class="text-white/40 text-sm font-medium mb-3 block"
+                dateTime={post.publishedAt}
+              >
+                {new Date(post.publishedAt).toLocaleDateString("id-ID", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+              <h2 class="text-xl md:text-2xl font-bold text-white leading-tight mb-3 group-hover:text-blue-400 transition-colors duration-300">
+                <a href={`/blog/${post.slug.current}`}>
+                  {post.title}
+                </a>
+              </h2>
+              {post.author && (
+                <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                  {post.author.image && (
+                    <img
+                      src={urlFor(post.author.image).width(36).height(36).fit("crop").url()}
+                      alt={post.author.name}
+                      loading="lazy"
+                      decoding="async"
+                      class="rounded-full border border-white/10"
+                    />
+                  )}
+                  <span class="text-white/60 text-sm">
+                    Oleh <span class="font-medium text-white/80">{post.author.name}</span>
+                  </span>
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-24">
+        <svg class="mx-auto h-16 w-16 text-white/20 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 00-2-2V9a2 2 0 00-2-2m-2 9h-1m2 2v-4m0 0l3-3m-3 3l-3-3" />
+        </svg>
+        <h3 class="text-xl font-semibold text-white/70 mb-2">Belum Ada Artikel di Kategori Ini</h3>
+        <p class="text-white/40">Artikel dengan kategori {category.title} akan muncul di sini.</p>
+      </div>
+    )}
+  </div>
+</Layout>

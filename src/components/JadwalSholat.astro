@@ -1,0 +1,118 @@
+---
+/**
+ * JadwalSholat — Widget jadwal sholat KHGT Muhammadiyah (Sidoarjo).
+ *
+ * Astro output statis: top-level await di bawah dieksekusi saat build,
+ * sehingga respons JSON KHGT otomatis ter-cache di HTML hasil build
+ * (mengurangi beban server API sesuai ketentuan KHGT).
+ */
+
+interface KhgtCalendarRes {
+  success: boolean;
+  data: {
+    hijri_formatted: string;
+    masehi_formatted: string;
+    hijri_date: { day: number; month: number; year: number; }
+  };
+}
+
+interface KhgtSholatRes {
+  status: boolean;
+  meta: { tz: number; };
+  data: Record<string, any>[]; // Array of daily schedule objects
+}
+
+// Koordinat Sidoarjo
+const LAT = -7.4478;
+const LNG = 112.7183;
+const today = new Date().toISOString().split('T')[0];
+
+let hijriFormatted: string | null = null;
+let masehiFormatted: string | null = null;
+let times: { name: string; time: string }[] = [];
+
+try {
+  const [calRes, sholatResRaw] = await Promise.all([
+    fetch('https://api-khgt.muhammadiyah.or.id/api/calendar/today'),
+    fetch('https://api-khgt.muhammadiyah.or.id/api/sholat/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lat: LAT, lng: LNG, date: today, mode: 'daily' }),
+    }),
+  ]);
+
+  const calendar = (await calRes.json()) as KhgtCalendarRes;
+  if (calendar?.success) {
+    hijriFormatted = calendar.data.hijri_formatted;
+    masehiFormatted = calendar.data.masehi_formatted;
+  }
+
+  const sholat = (await sholatResRaw.json()) as KhgtSholatRes;
+  // API aktual memakai `success`; dokumentasi memakai `status` — dukung keduanya.
+  const ok = (sholat as unknown as { success?: boolean }).success ?? sholat.status;
+  const rawData: unknown = sholat.data;
+  // Dokumentasi: `data` array harian; API aktual: `data.schedules` — dukung keduanya.
+  const list: Record<string, any>[] = Array.isArray(rawData)
+    ? (rawData as Record<string, any>[])
+    : (((rawData as { schedules?: Record<string, any>[] } | null)?.schedules ?? []) as Record<string, any>[]);
+  const day = list[0];
+
+  if (ok && day) {
+    const pick = (...keys: string[]): string | null => {
+      for (const key of keys) {
+        const value: unknown = day[key];
+        if (typeof value === 'string' && value) return value;
+      }
+      return null;
+    };
+    const defs = [
+      { name: 'Imsak', keys: ['imsak'] },
+      { name: 'Subuh', keys: ['subuh', 'fajr', 'shubuh'] },
+      { name: 'Dzuhur', keys: ['dzuhur', 'dhuhur', 'zuhr', 'dhuhr'] },
+      { name: 'Ashar', keys: ['ashar', 'asr'] },
+      { name: 'Maghrib', keys: ['maghrib'] },
+      { name: 'Isya', keys: ['isya', 'isha'] },
+    ];
+    times = defs
+      .map((d) => ({ name: d.name, time: pick(...d.keys) ?? '--:--' }))
+      .filter((t) => t.time !== '--:--');
+  }
+} catch {
+  // Fallback UI dirender di bawah (times kosong).
+}
+---
+
+<section id="jadwal-sholat" aria-label="Jadwal Sholat" class="h-full scroll-mt-28">
+  <div class="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 p-6 md:p-8 h-full">
+    <!-- Iridescent glow border -->
+    <span class="absolute inset-0 rounded-[2.5rem] border border-transparent hover:border-blue-500/20 pointer-events-none" aria-hidden="true"></span>
+    <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-6">
+      <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-xl md:text-2xl font-bold text-white tracking-tight">
+          {hijriFormatted ?? 'Jadwal Sholat Sidoarjo'}
+        </h2>
+        {masehiFormatted && (
+          <p class="text-white/50 text-sm font-medium">{masehiFormatted} &bull; Sidoarjo (KHGT)</p>
+        )}
+      </div>
+    </div>
+
+    {times.length > 0 ? (
+      <dl class="grid grid-cols-2 gap-3">
+        {times.map((t) => (
+          <div class="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-center transition-colors duration-300 hover:border-white/20">
+            <dt class="text-white/50 text-xs uppercase tracking-wider mb-1">{t.name}</dt>
+            <dd class="text-white text-lg md:text-xl font-bold tabular-nums">{t.time}</dd>
+          </div>
+        ))}
+      </dl>
+    ) : (
+      <p class="text-white/40 text-sm">Menunggu data jadwal...</p>
+    )}
+  </div>
+</section>

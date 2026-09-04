@@ -1,0 +1,217 @@
+---
+import Layout from "../../layouts/main.astro";
+import { getLectures } from "../../utils/sanity";
+import type { Lecture } from "../../utils/sanity";
+import { urlFor } from "../../utils/image";
+
+const lectureList = await getLectures();
+
+const now = new Date();
+const upcoming = lectureList.filter((lecture) => new Date(lecture.date) >= now);
+const past = lectureList.filter((lecture) => new Date(lecture.date) < now);
+
+// Mendukung data lama (string) maupun relasi baru (object)
+const getLocationName = (lecture: Lecture) =>
+  typeof lecture.location === "string" ? lecture.location : (lecture.location?.name ?? "-");
+const getSpeakerName = (lecture: Lecture) =>
+  typeof lecture.speaker === "string" ? lecture.speaker : (lecture.speaker?.name ?? "-");
+---
+
+<Layout title="Jadwal Kajian - TablighMu Sidoarjo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <header class="mb-16 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">Jadwal Kajian</h1>
+      <p class="text-white/60 text-lg max-w-2xl mx-auto">
+        Ikuti rangkaian kajian dan pengajian rutin yang diselenggarakan untuk memperdalam ilmu dan keimanan.
+      </p>
+    </header>
+
+    {upcoming.length > 0 && (
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+          <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Pengajian Mendatang
+        </h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {upcoming.map((lecture) => (
+            <article class="group relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:-translate-y-1 active:scale-[0.98]">
+              {lecture.coverImage && (
+                <div class="aspect-[16/10] overflow-hidden relative">
+                  <img
+                    src={urlFor(lecture.coverImage).width(800).height(500).fit("crop").url()}
+                    alt={lecture.coverImage.alt || lecture.title}
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy" decoding="async"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <!-- Iridescent image overlay on hover -->
+                  <span class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                </div>
+              )}
+              <!-- Iridescent glow border on hover -->
+              <span class="absolute inset-0 rounded-[2.5rem] border border-transparent group-hover:border-blue-500/20 group-hover:border-b-purple-500/20 group-hover:border-r-pink-500/20 transition-all duration-500 pointer-events-none"></span>
+              <div class="p-6 md:p-8 relative z-10">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                  <span class="px-3 py-1 text-xs font-medium text-blue-300 bg-blue-500/10 border border-blue-500/20 rounded-full backdrop-blur-sm">
+                    Pengajian Mendatang
+                  </span>
+                  {lecture.muslimahOnly && (
+                    <span class="px-3 py-1 text-xs font-medium text-pink-200/90 bg-gradient-to-r from-pink-500/15 to-purple-500/15 border border-pink-300/20 rounded-full backdrop-blur-sm">
+                      Khusus Muslimah
+                    </span>
+                  )}
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-white leading-tight mb-4">
+                  {lecture.title}
+                </h3>
+                <dl class="space-y-3 text-white/70 text-sm">
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                      <div class="text-white/40 text-xs uppercase tracking-wider">Tanggal</div>
+                      <div class="font-medium">{new Date(lecture.date).toLocaleDateString("id-ID", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <div class="text-white/40 text-xs uppercase tracking-wider">Waktu</div>
+                      <div class="font-medium">{lecture.time}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div>
+                      <div class="text-white/40 text-xs uppercase tracking-wider">Lokasi</div>
+                      <div class="font-medium">{getLocationName(lecture)}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-white/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <div>
+                      <div class="text-white/40 text-xs uppercase tracking-wider">Pemateri</div>
+                      <div class="font-medium">{getSpeakerName(lecture)}</div>
+                    </div>
+                  </div>
+                </dl>
+                {lecture.muslimahOnly && (
+                  <div class="mt-5 flex items-start gap-3 p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-pink-300/15 bg-gradient-to-br from-pink-500/10 via-purple-500/5 to-transparent">
+                    <svg class="w-5 h-5 text-pink-200/70 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <p class="text-sm leading-relaxed text-pink-100/70">
+                      Acara khusus muslimah. Mari hadir dengan busana syar'i dan menghindari tabarruj.
+                    </p>
+                  </div>
+                )}
+                <a href={`/pengajian/${lecture.slug.current}`} class="mt-6 block w-full text-center px-6 py-3 rounded-xl bg-white/10 border border-white/10 text-white font-medium transition-all duration-300 hover:bg-white/15 hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+                  Selengkapnya
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {past.length > 0 && (
+      <section>
+        <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+          <svg class="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Arsip Pengajian
+        </h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {past.slice(0, 6).map((lecture) => (
+            <article class="group relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 active:scale-[0.98] opacity-70">
+              {lecture.coverImage && (
+                <div class="aspect-[16/10] overflow-hidden relative">
+                  <img
+                    src={urlFor(lecture.coverImage).width(800).height(500).fit("crop").url()}
+                    alt={lecture.coverImage.alt || lecture.title}
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy" decoding="async"
+                  />
+                  <!-- Iridescent image overlay on hover -->
+                  <span class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                </div>
+              )}
+              <!-- Iridescent glow border on hover -->
+              <span class="absolute inset-0 rounded-[2.5rem] border border-transparent group-hover:border-blue-500/20 group-hover:border-b-purple-500/20 group-hover:border-r-pink-500/20 transition-all duration-500 pointer-events-none"></span>
+              <div class="p-6 md:p-8 relative z-10">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                  <span class="px-3 py-1 text-xs font-medium text-white/40 bg-white/5 border border-white/10 rounded-full">
+                    Selesai
+                  </span>
+                  {lecture.muslimahOnly && (
+                    <span class="px-3 py-1 text-xs font-medium text-pink-200/70 bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-300/15 rounded-full backdrop-blur-sm">
+                      Khusus Muslimah
+                    </span>
+                  )}
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-white leading-tight mb-4">
+                  {lecture.title}
+                </h3>
+                <dl class="space-y-3 text-white/60 text-sm">
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-white/30 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                      <div class="text-white/30 text-xs uppercase tracking-wider">Tanggal</div>
+                      <div>{new Date(lecture.date).toLocaleDateString("id-ID", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-white/30 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    </svg>
+                    <div>
+                      <div class="text-white/30 text-xs uppercase tracking-wider">Lokasi</div>
+                      <div>{getLocationName(lecture)}</div>
+                    </div>
+                  </div>
+                </dl>
+                {lecture.muslimahOnly && (
+                  <div class="mt-5 flex items-start gap-3 p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-pink-300/10 bg-gradient-to-br from-pink-500/5 via-purple-500/5 to-transparent">
+                    <p class="text-sm leading-relaxed text-pink-100/60">
+                      Acara khusus muslimah. Mari hadir dengan busana syar'i dan menghindari tabarruj.
+                    </p>
+                  </div>
+                )}
+                <a href={`/pengajian/${lecture.slug.current}`} class="mt-6 block w-full text-center px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 font-medium transition-all duration-300 hover:bg-white/10 hover:text-white">
+                  Lihat Detail
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+        {past.length > 6 && (
+          <p class="text-center text-white/40 mt-8 text-sm">Dan {past.length - 6} kajian lainnya...</p>
+        )}
+      </section>
+    )}
+
+    {lectureList.length === 0 && (
+      <div class="text-center py-24">
+        <svg class="mx-auto h-16 w-16 text-white/20 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <h3 class="text-xl font-semibold text-white/70 mb-2">Belum Ada Jadwal Kajian</h3>
+        <p class="text-white/40">Jadwal kajian akan muncul di sini setelah ditambahkan di Sanity Studio.</p>
+      </div>
+    )}
+  </div>
+</Layout>

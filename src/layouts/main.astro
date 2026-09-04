@@ -1,0 +1,106 @@
+---
+import { getSiteSettings } from "../utils/sanity";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import { urlFor } from "../utils/image";
+import "../styles/global.css";
+
+const siteSettings = await getSiteSettings();
+const { title } = Astro.props;
+
+const faviconUrl = siteSettings?.favicon?.asset
+  ? urlFor(siteSettings.favicon).width(64).height(64).format('png').url()
+  : '/favicon.svg';
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" sizes="32x32" href={faviconUrl} />
+    <link rel="icon" type="image/png" sizes="16x16" href={faviconUrl} />
+    <link rel="apple-touch-icon" href={siteSettings?.favicon?.asset ? urlFor(siteSettings.favicon).width(180).height(180).format('png').url() : '/favicon.svg'} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>{title || siteSettings?.siteTitle || "TablighMu Sidoarjo"}</title>
+    <meta name="description" content={siteSettings?.siteDescription || "Portal Dakwah Berkemajuan TablighMu Sidoarjo"} />
+    <meta name="theme-color" content="#09090b" />
+  </head>
+  <body class="flex flex-col min-h-screen bg-zinc-950 text-white antialiased relative overflow-x-hidden">
+    <!-- Ambient Mesh Gradient Background -->
+    <div class="fixed inset-0 -z-20 pointer-events-none" aria-hidden="true">
+      <!-- Large warm glow - bottom right -->
+      <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-amber-900/20 blur-[180px] animate-blob-slow" style="animation-duration: 20s;"></div>
+      <!-- Cool navy glow - top left -->
+      <div class="absolute top-[-15%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-900/30 blur-[180px] animate-blob-slow" style="animation-duration: 25s; animation-delay: -5s;"></div>
+      <!-- Purple glow - center right -->
+      <div class="absolute top-[30%] right-[-20%] w-[40vw] h-[40vw] rounded-full bg-purple-900/25 blur-[180px] animate-blob-slow" style="animation-duration: 30s; animation-delay: -10s;"></div>
+      <!-- Subtle indigo glow - bottom left -->
+      <div class="absolute bottom-[-10%] left-[-15%] w-[35vw] h-[35vw] rounded-full bg-indigo-900/20 blur-[180px] animate-blob-slow" style="animation-duration: 22s; animation-delay: -15s;"></div>
+      <!-- Cyan accent - top right -->
+      <div class="absolute top-[10%] right-[5%] w-[25vw] h-[25vw] rounded-full bg-cyan-900/15 blur-[180px] animate-blob-slow" style="animation-duration: 28s; animation-delay: -8s;"></div>
+    </div>
+
+    <!-- Subtle vignette overlay -->
+    <div class="fixed inset-0 -z-10 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-zinc-950/60" aria-hidden="true"></div>
+
+    <!-- Cursor Follower Glow -->
+    <div id="cursor-glow" class="fixed pointer-events-none -z-10 w-[400px] h-[400px] rounded-full translate-x-[-50%] translate-y-[-50%] bg-gradient-to-br from-blue-500/20 via-purple-500/15 to-pink-500/10 blur-3xl opacity-0 transition-opacity duration-300" style="top: 0; left: 0;" aria-hidden="true"></div>
+
+    <Header siteTitle={siteSettings?.siteTitle || "TablighMu Sidoarjo"} logo={siteSettings?.logo} />
+    <main class="flex-grow relative z-10 pt-10 md:pt-16">
+      <slot />
+    </main>
+    <Footer footerText={siteSettings?.footerText} siteTitle={siteSettings?.siteTitle || "TablighMu Sidoarjo"} />
+
+    <script is:inline>
+      (() => {
+        const glow = document.getElementById('cursor-glow');
+        if (!glow) return;
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        let isVisible = false;
+        let animationFrame = null;
+
+        const lerp = (start, end, factor) => start + (end - start) * factor;
+
+        const animate = () => {
+          currentX = lerp(currentX, mouseX, 0.15);
+          currentY = lerp(currentY, mouseY, 0.15);
+          
+          glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+          
+          animationFrame = requestAnimationFrame(animate);
+        };
+
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          
+          if (!isVisible) {
+            isVisible = true;
+            glow.style.opacity = '0.5';
+            animate();
+          }
+        });
+
+        document.addEventListener('mouseleave', () => {
+          isVisible = false;
+          glow.style.opacity = '0';
+          if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+            animationFrame = null;
+          }
+        });
+
+        // Reduce motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prefersReducedMotion.matches) {
+          glow.style.display = 'none';
+        }
+      })();
+    </script>
+  </body>
+</html>
